@@ -34,26 +34,34 @@ public class SWEA5215 {
 				calo[n]=Integer.parseInt(st.nextToken());
 			}
 			
-			comb(0,0,0,0);
+			comb(0,0,0);
 			System.out.println("#"+tc+" "+ans);
 		}
 
 	}
-	private static void comb (int cnt, int start, int total_cal, int total_score) {
+	private static void comb (int idx, int total_cal, int total_score) {
 	
-		if (cnt==N) return;
-			
-		for (int i=start; i<N; i++) {
-			if (selected[i]) continue;
-			if (total_cal+calo[i]>L) continue;
-			
-			if (total_score+score[i]>ans)
-				ans=total_score+score[i];
-			
-			selected[i]=true;
-			comb (cnt+1, i+1, total_cal+calo[i], total_score+score[i]);
-			selected[i]=false;	
+		if (total_cal>L) return;
+		if (idx==N) {
+			ans=Math.max(ans, total_score);
+			return;
 		}
+			
+//		for (int i=start; i<N; i++) {
+//			if (selected[i]) continue;
+//			if (total_cal+calo[i]>L) continue;
+//			
+//			if (total_score+score[i]>ans)
+//				ans=total_score+score[i];
+//			
+//			selected[i]=true;
+//			comb (idx+1, i+1, total_cal+calo[i], total_score+score[i]);
+//			selected[i]=false;	
+//		}
+		
+		comb (idx+1, total_cal, total_score);
+		comb (idx+1, total_cal+calo[idx], total_score+score[idx]);
+		
 		
 	}
 
