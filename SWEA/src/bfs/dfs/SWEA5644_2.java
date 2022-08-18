@@ -82,7 +82,9 @@ public class SWEA5644_2 {
 	}
 
 	private static void move() {
+
 		
+		//초기 위치 최댓값 구하기
 		if (map[ay][ax].size()>0) {
 			int max=0;
 			for (int i=0; i<map[ay][ax].size(); i++) {
@@ -103,14 +105,15 @@ public class SWEA5644_2 {
 		}
 		
 		for (int i=0; i<M; i++) {
+			
 			int dirA=path[0][i];
 			int dirB=path[1][i];
 			
 			ay+=dy[dirA]; ax+=dx[dirA];
 			by+=dy[dirB]; bx+=dx[dirB];
 			
-			int sizeA=map[ay][ax].size();
-			int sizeB=map[by][bx].size();
+			int sizeA=map[ay][ax].size();	//현재 A가 위치한 곳의 충전기 개수
+			int sizeB=map[by][bx].size();	//현재 B가 위치한 곳의 충전기 개수
 			
 			if (sizeA==0 && sizeB==0) continue;
 			else if (sizeA==0 && sizeB!=0) {
@@ -134,19 +137,19 @@ public class SWEA5644_2 {
 			
 			else {
 				int max=0;
-				for (int k=0; k<sizeA; k++) { //모든 BC에 대해서 A가 충전하려는 BC
-					// i==j => A,B가 같은 BC에서 충전함
-					for (int l=0; l<sizeB; l++) { //모든 BC에 대해서 B가 충전하려는 BC
-						int sum=0;
+				for (int k=0; k<sizeA; k++) { 
+					
+					int aPower= bc[map[ay][ax].get(k)].P; 	
+					
+					for (int l=0; l<sizeB; l++) { 
+						int sum=0;					
+						int bPower= bc[map[by][bx].get(l)].P; 
 						
-						int aPower= bc[map[ay][ax].get(k)].P; //bcArray[i]
-						int bPower= bc[map[by][bx].get(l)].P; //bcAraay[j]
-						
-
-						if (aPower!=bPower) sum=aPower + bPower; 		// 각각 다른 충전소에서 충전 => 단순히 더함
-						else {
-							if (k!=l) sum=aPower*2;
-							else sum=aPower;
+						if (aPower!=bPower) sum=aPower + bPower; 
+						else if (aPower==bPower){
+							if (map[ay][ax].get(k) == map[by][bx].get(l))
+								sum = aPower;
+							else sum=2*aPower;
 						}
 						max=Math.max(max, sum); 			
 					}
@@ -160,7 +163,7 @@ public class SWEA5644_2 {
 		int y = bc[i].y;
 		int x = bc[i].x;
 		int C = bc[i].C;
-		int P = bc[i].P;
+		//int P = bc[i].P;
 
 		int[][] distance = new int[11][11];
 		for (int k = 1; k <= 10; k++)
