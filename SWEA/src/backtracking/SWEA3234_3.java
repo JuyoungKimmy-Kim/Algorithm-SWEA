@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /*
- * 시간 초과
+ * 실패 
  */
 public class SWEA3234_3 {
 
