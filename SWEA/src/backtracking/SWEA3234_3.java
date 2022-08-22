@@ -51,7 +51,7 @@ public class SWEA3234_3 {
 		for (int i=0; i<N; i++ ) {
 			if ((mask & 1<<i)!=0) continue;
 
-			//perm (rightNum+1, leftSum-choo[i], rightSum+choo[i], mask | 1<<i, choo);
+			perm (rightNum+1, leftSum-choo[i], rightSum+choo[i], mask | 1<<i, choo);
 	
 			if (leftSum>=rightSum+choo[i]) 
 				perm (rightNum+1, leftSum+choo[i], rightSum-choo[i], mask | 1<<i, choo);
