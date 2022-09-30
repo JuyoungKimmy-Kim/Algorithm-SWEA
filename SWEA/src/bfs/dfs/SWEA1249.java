@@ -33,6 +33,8 @@ public class SWEA1249 {
 					map[i][j]=line.charAt(j)-'0';
 				}
 			}
+			
+			System.out.println("#"+tc+" "+bfs());
 		}
 	}
 	
@@ -57,13 +59,10 @@ public class SWEA1249 {
 				
 				if (ny<0 || nx<0 || ny>=N || nx>=N) continue;
 				
-				if (distance[ny][nx]==-1)  {
-					
 				
-			
-				} else if (map[ny][nx]+distance[y][x]<distance[ny][nx]) {
-					
-					
+				if (distance[ny][nx]==-1 || map[ny][nx]+dist<distance[ny][nx]) {
+					distance[ny][nx]=map[ny][nx]+dist;
+					pq.add(new Pos (ny, nx, distance[ny][nx]));
 				}
 			}
 		}

@@ -33,7 +33,7 @@ public class SWEA5650 {
 					map[i][j]=Integer.parseInt(st.nextToken());
 					
 					if (map[i][j]>=6) {
-						
+						pair.add(new Pair (i,j,map[i][j]));
 					}
 				}
 			}
@@ -67,8 +67,10 @@ public class SWEA5650 {
 			nx=x;
 			while (nx<N && map[y][nx]==0)
 				nx++;
+			
 			if (nx==N) {
-				dfs (sy, sx, y, nx-1, 1, cnt+1);
+				nx--;
+				dfs (sy, sx, y, nx, 1, cnt+1);
 			} else if (map[y][nx]==1 || map[y][nx]==2 || map[y][nx]==5) {
 				dfs (sy, sx, y, nx-1, 1, cnt);
 			} else if (map[y][nx]==3) {
@@ -82,7 +84,8 @@ public class SWEA5650 {
 			while (nx>=0 && map[y][nx]==0)
 				nx--;
 			if (nx==-1) {
-				dfs (sy, sx, y, nx+1, 0, cnt+1);
+				nx++;
+				dfs (sy, sx, y, nx, 0, cnt+1);
 			} else if (map[y][nx]==3 || map[y][nx]==4 || map[y][nx]==5) {
 				dfs (sy, sx, y, nx+1, 0, cnt);
 			} else if (map[y][nx]==1) {
@@ -96,7 +99,8 @@ public class SWEA5650 {
 			while (ny<N && map[ny][x]==0)
 				ny++;
 			if (ny==N) {
-				dfs (sy, sx, ny-1, x, 3, cnt+1);
+				ny--;
+				dfs (sy, sx, ny, x, 3, cnt+1);
 			} else if (map[ny][x]==2 || map[ny][x]==3 || map[ny][x]==5) {
 				dfs (sy, sx, ny-1, x, 3, cnt);
 			} else if (map[ny][x]==1) {
@@ -110,7 +114,8 @@ public class SWEA5650 {
 			while (ny>=0 && map[ny][x]==0)
 				ny--;
 			if (ny==-1) {
-				dfs (sy, sx, ny+1, x, 2, cnt+1);
+				ny--;
+				dfs (sy, sx, ny, x, 2, cnt+1);
 			} else if (map[ny][x]==1 || map[ny][x]==4 || map[ny][x]==5) {
 				dfs (sy, sx, ny+1, x, 2, cnt);
 			} else if (map[ny][x]==2) {
@@ -121,13 +126,19 @@ public class SWEA5650 {
 			break;
 		}
 
-		
-
-		// 웜홀인 경우
 		if (map[ny][nx]>=6 && map[ny][nx]<=10) {
-
+			
+			for (int i=0; i<pair.size(); i++) {
+				if (map[ny][nx]==pair.get(i).no) {
+					if (pair.get(i).y!=ny && pair.get(i).x!=nx) {
+						dfs (sy, sx, pair.get(i).y, pair.get(i).x, dir, cnt);
+					}
+				}
+			}
 		}
-		// 블랙홀인 경우
+		
+		if (map[ny][nx]==-1) 
+			dfs (sy, sx, ny, nx, dir, cnt);
 	}
 	
 	static boolean isInRange (int ny, int nx) {
