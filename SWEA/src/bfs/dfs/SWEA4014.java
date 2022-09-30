@@ -30,12 +30,57 @@ public class SWEA4014 {
 					map2[j][i]=map1[i][j];
 				}
 			}
-			
-			
+			int ret=check(map1)+check(map2);
+			System.out.println("#"+tc+" "+ret);
 		}
-
 	}
 	
-	static void check (int[][] map)
+	static int check (int[][] map) {
+		
+		int cnt=0;
+		
+		for (int i=0; i<N; i++) {
+			
+			int prev=map[i][0];
+			int dist=1;
+			
+			for (int j=1; j<N; j++) {
+				
+				if (prev==map[i][j]) {
+					dist++;
+				} else if (Math.abs(map[i][j]-prev)>1) {
+					break;
+				} else if (prev<map[i][j]) {
+					if (dist>=X) {
+						prev=map[i][j];
+						dist=0;
+						j--;
+					} else break;
+				} else if (prev>map[i][j]) {
+					
+					boolean flag=false;
+					int standard=map[i][j];
+					for (int k=j; k<=j+X-1; k++) {
+						// 범위를넘거나 다리를 짓는 곳의 높이가 각각 다를 때
+						if (k>=N || map[i][k]!=standard) {
+							flag=true; break;
+						}
+					}
+					if (flag) break;
+					
+					dist=0;
+					j=j+X-1;
+					prev=map[i][j];
+				}
+				
+				if (j==N-1) {
+					//System.out.println(i+"행"+j+"열");
+					cnt++;
+				}
+			}
+		}
+		
+		return cnt;
+	}
 
 }
