@@ -14,7 +14,7 @@ public class SWEA5650 {
 
 	static int T, N, ans;
 	static int[][] map;
-	static Pair pair[];
+	static List<Pair> pair;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -23,10 +23,9 @@ public class SWEA5650 {
 		
 		for (int tc=1; tc<=T; tc++) {
 			
-			
 			N=Integer.parseInt(br.readLine());
 			map=new int[N][N];
-			pair=new Pair[11];
+			pair=new ArrayList<>();
 			
 			for (int i=0; i<N; i++) {
 				st=new StringTokenizer (br.readLine().trim());
@@ -34,11 +33,13 @@ public class SWEA5650 {
 					map[i][j]=Integer.parseInt(st.nextToken());
 					
 					if (map[i][j]>=6) {
-						pair[map[i][j]].list.add(new int[] {i,j});
+						
 					}
 				}
 			}
 			
+			ans=0;
+
 			for (int i=0; i<N; i++) {
 				for (int j=0; j<N; j++) {
 					if (map[i][j]==0) {
@@ -48,6 +49,8 @@ public class SWEA5650 {
 					}
 				}
 			}
+			
+			System.out.println("#"+tc+" "+ans);
 		}
 	}
 	
@@ -117,19 +120,14 @@ public class SWEA5650 {
 			}
 			break;
 		}
+
 		
 
-		if (map[ny][nx]>=6 && map[ny][nx]<=10) {
-			int holeNo=map[ny][nx];
-			if (pair[holeNo].list.get(0)[0]==ny && pair[holeNo].list.get(0)[1]==nx) {
-				dfs (sy, sx, pair[holeNo].list.get(1)[0],pair[holeNo].list.get(1)[1], dir, cnt );
-			} else {
-				dfs (sy, sx, pair[holeNo].list.get(0)[0],pair[holeNo].list.get(0)[1], dir, cnt );
-			}
-		}
-		
 		// 웜홀인 경우
-		
+		if (map[ny][nx]>=6 && map[ny][nx]<=10) {
+
+		}
+		// 블랙홀인 경우
 	}
 	
 	static boolean isInRange (int ny, int nx) {
@@ -138,10 +136,12 @@ public class SWEA5650 {
 	}
 
 	static class Pair {
-		List<int[]> list;
-		
-		Pair () {
-			list=new ArrayList<>();
+		int y,x, no;
+	
+		Pair (int y, int x, int no) {
+			this.y=y;
+			this.x=x;
+			this.no=no;
 		}
 	}
 }
