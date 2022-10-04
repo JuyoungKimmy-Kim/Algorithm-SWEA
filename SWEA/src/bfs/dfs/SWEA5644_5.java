@@ -15,7 +15,7 @@ public class SWEA5644_5 {
 	static final int dy[] = {0,-1,0,1,0};
 	static final int dx[] = {0,0,1,0,-1};
 	
-	static int T,M,A;
+	static int T,M,A, ans,ay,ax,by,bx;
 	static int[][] move;
 	static List<BC> bcList;
 	static List<Integer>[][] map;
@@ -31,11 +31,11 @@ public class SWEA5644_5 {
 			M=Integer.parseInt(st.nextToken());
 			A=Integer.parseInt(st.nextToken());
 			
-			move=new int[2][M];
+			move=new int[2][M+1];
 			
 			for (int i=0; i<2; i++) {
 				st=new StringTokenizer (br.readLine());
-				for (int j=0; j<M; j++) {
+				for (int j=1; j<=M; j++) {
 					move[i][j]=Integer.parseInt(st.nextToken());
 				}
 			}
@@ -58,15 +58,64 @@ public class SWEA5644_5 {
 				}
 			}
 			
-			// update map
 			for (int i=0; i<bcList.size(); i++) {
 				bfs (i);
 			}
 			
+			ay=ax=1;
+			by=bx=10;
 			
+			ans=0;
+			charge();
+			System.out.println("#"+tc+" "+ans);
+						
 		}
 	}
 	
+	
+	static void charge () {
+
+		for (int T=0; T<=M; T++) {
+			int aDir=move[0][T];
+			int bDir=move[1][T];
+			
+			ay+=dy[aDir]; ax+=dx[aDir];
+			by+=dy[bDir]; bx+=dx[bDir];
+			
+			int aSize=map[ay][ax].size();
+			int bSize=map[by][bx].size();
+			
+			if (aSize==0 && bSize==0) continue;
+			else if (aSize>0 && bSize==0) {
+				int max=0;
+				for (int i=0; i<aSize; i++) {
+					max=Math.max(max, bcList.get(map[ay][ax].get(i)).p);
+				}
+				ans+=max;
+			} else if (aSize==0 && bSize>0) {
+				int max=0;
+				for (int i=0; i<bSize; i++) {
+					max=Math.max(max, bcList.get(map[by][bx].get(i)).p);
+				}
+				ans+=max;
+			} else  {
+				int max=0;
+				for (int i=0; i<aSize; i++) {
+					for (int j=0; j<bSize; j++) {
+						int aIdx=map[ay][ax].get(i);
+						int bIdx=map[by][bx].get(j);
+						
+						if (aIdx==bIdx) {
+							max=Math.max(max, bcList.get(aIdx).p);
+						} else {
+							max=Math.max(max, bcList.get(aIdx).p + bcList.get(bIdx).p);
+						}
+					}
+				}
+				ans+=max;
+			}
+		}		
+	}
 
 	static void bfs (int n) {
 		Queue<int[]> q=new ArrayDeque<> ();
@@ -87,24 +136,23 @@ public class SWEA5644_5 {
 			int cy=q.peek()[0];
 			int cx=q.poll()[1];
 			
-			for (int d=0; d<4; d++) {
+			for (int d=1; d<=4; d++) {
 				int ny=cy+dy[d];
 				int nx=cx+dx[d];
 				
-				if (isInRagne(ny, nx) && dist[ny][nx]!=-1) {
-					dist[ny][nx]=dist[y][x]+1;
+				if (ny>=1 && nx>=1 && ny<=10 && nx<=10 && dist[ny][nx]==-1) {
+					dist[ny][nx]=dist[cy][cx]+1;
+					
 					if (dist[ny][nx]>C) return ;
 					
 					q.add(new int[] {ny, nx});
+					map[ny][nx].add(n);
 				}
 			}	
 		}
 	}
 	
-	static boolean isInRagne (int ny, int nx) {
-		if (ny<1 || nx<1 || ny>10 || nx>10 ) return false;
-		return true;
-	}
+
 	
 	static class BC {
 		int x,y,c,p;
@@ -114,6 +162,15 @@ public class SWEA5644_5 {
 			this.y=y;
 			this.c=c;
 			this.p=p;
+		}
+	}
+	
+	static void print () {
+		for (int i=1; i<=10; i++) {
+			for (int j=1; j<=10; j++) {
+				System.out.print(map[i][j].size()+" ");
+			}
+			System.out.println();
 		}
 	}
 

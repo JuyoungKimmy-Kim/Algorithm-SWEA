@@ -48,13 +48,9 @@ public class SWEA5656 {
 	}
 	
 	private static void dfs (int tgtIdx) {
-		if (tgtIdx==N) {
-			
-			//print(map);
-			
+		if (tgtIdx==N) {			
 			int ret=count();
 			
-			//System.out.println("***********ret "+ ret+"***********");
 			ans=Math.min(ans, ret);
 			return ;
 		}
@@ -124,8 +120,6 @@ public class SWEA5656 {
 				while (y<H && map[y][j]==0)
 					y++;
 				
-				// y==H 이거나, map[y][j]!=0 아닐 때 멈춤
-				// 따라서 y-- 해주어야 함
 				if (y==i+1) continue;
 				y--;
 				

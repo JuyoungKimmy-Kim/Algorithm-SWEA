@@ -15,6 +15,7 @@ public class SWEA5650 {
 	static int T, N, ans;
 	static int[][] map;
 	static List<Pair> pair;
+	static boolean done;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br=new BufferedReader (new InputStreamReader (System.in));
@@ -44,8 +45,10 @@ public class SWEA5650 {
 				for (int j=0; j<N; j++) {
 					if (map[i][j]==0) {
 						
-						for (int d=0; d<4; d++) 
+						for (int d=0; d<4; d++) {
+							done=false;
 							dfs (i, j, i,j, d, 0);
+						}
 					}
 				}
 			}
@@ -57,6 +60,7 @@ public class SWEA5650 {
 	static void dfs (int sy, int sx, int y, int x, int dir, int cnt) {
 		if ((cnt!=0 && sy==y && sx==x) || map[y][x]==-1) {
 			ans=Math.max(ans, cnt);
+			done=true;
 			return ;
 		}
 		
@@ -64,7 +68,7 @@ public class SWEA5650 {
 		
 		switch (dir) {
 		case 0: 
-			nx=x;
+			nx=x+1;
 			while (nx<N && map[y][nx]==0)
 				nx++;
 			
@@ -72,7 +76,7 @@ public class SWEA5650 {
 				nx--;
 				dfs (sy, sx, y, nx, 1, cnt+1);
 			} else if (map[y][nx]==1 || map[y][nx]==2 || map[y][nx]==5) {
-				dfs (sy, sx, y, nx-1, 1, cnt);
+				dfs (sy, sx, y, nx, 1, cnt);
 			} else if (map[y][nx]==3) {
 				dfs (sy, sx, y, nx, 2, cnt);
 			} else if (map[y][nx]==4) {
@@ -80,14 +84,14 @@ public class SWEA5650 {
 			}
 			break;
 		case 1: 
-			nx=x;
+			nx=x-1;
 			while (nx>=0 && map[y][nx]==0)
 				nx--;
-			if (nx==-1) {
+			if (nx<0) {
 				nx++;
 				dfs (sy, sx, y, nx, 0, cnt+1);
 			} else if (map[y][nx]==3 || map[y][nx]==4 || map[y][nx]==5) {
-				dfs (sy, sx, y, nx+1, 0, cnt);
+				dfs (sy, sx, y, nx, 0, cnt);
 			} else if (map[y][nx]==1) {
 				dfs (sy, sx, y, nx, 3, cnt);
 			} else if (map[y][nx]==2) {
@@ -95,14 +99,14 @@ public class SWEA5650 {
 			}
 			break;
 		case 2: 
-			ny=y;
+			ny=y+1;
 			while (ny<N && map[ny][x]==0)
 				ny++;
 			if (ny==N) {
 				ny--;
 				dfs (sy, sx, ny, x, 3, cnt+1);
 			} else if (map[ny][x]==2 || map[ny][x]==3 || map[ny][x]==5) {
-				dfs (sy, sx, ny-1, x, 3, cnt);
+				dfs (sy, sx, ny, x, 3, cnt);
 			} else if (map[ny][x]==1) {
 				dfs (sy, sx, ny, x, 0, cnt);
 			} else if (map[ny][x]==4) {
@@ -110,14 +114,14 @@ public class SWEA5650 {
 			}
 			break;
 		case 3: 
-			ny=y;
+			ny=y-1;
 			while (ny>=0 && map[ny][x]==0)
 				ny--;
-			if (ny==-1) {
-				ny--;
+			if (ny<0) {
+				ny++;
 				dfs (sy, sx, ny, x, 2, cnt+1);
 			} else if (map[ny][x]==1 || map[ny][x]==4 || map[ny][x]==5) {
-				dfs (sy, sx, ny+1, x, 2, cnt);
+				dfs (sy, sx, ny, x, 2, cnt);
 			} else if (map[ny][x]==2) {
 				dfs (sy, sx, ny, x, 0, cnt);
 			} else if (map[ny][x]==3) {
@@ -139,6 +143,8 @@ public class SWEA5650 {
 		
 		if (map[ny][nx]==-1) 
 			dfs (sy, sx, ny, nx, dir, cnt);
+		
+		if (done) return ;
 	}
 	
 	static boolean isInRange (int ny, int nx) {
