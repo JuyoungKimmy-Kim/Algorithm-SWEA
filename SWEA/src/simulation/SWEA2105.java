@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+/*
+ * 게리멘더링 풀 때 데인적이 있어서 무난하게 풀었음
+ */
 public class SWEA2105 {
 
 	static int T,N, ans;
@@ -42,6 +45,14 @@ public class SWEA2105 {
 	
 	static void simulation () {
 		
+		/*
+		 * 시작점이 될 수 있는 것
+		 * y축 : 0~N-3 까지 가능
+		 * x축 : 1~N-2 까지 가능
+		 * w (왼쪽 아래로 내려가는 길이) : 1~N-1까지 가능
+		 * h (오른쪽 아래로 내려가는 길이) : 1~N-1까지 가능
+		 * 
+		 */
 		for (int i=0; i<=N-3; i++) {
 			for (int j=1; j<=N-2; j++) {
 				for (int w=1; w<=N-1; w++) {
@@ -55,9 +66,11 @@ public class SWEA2105 {
 	
 	static void eat (int y, int x, int w, int h) {
 		
-		
+		// 한 번 더 범위 체크
 		if (y+w+h>=N || x+h>=N || x-w<0) return ;
 		Arrays.fill(selected, false);
+		
+		//제일 위에부터 반시계 방향으로 좌표를 만들어준다
 		
 		pos[0]=new Pos (y,x);
 		pos[1]=new Pos (y+w, x-w);
