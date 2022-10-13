@@ -48,11 +48,8 @@ public class samsung2022_04_나무박멸 {
 		for (int m = 1; m <= M; m++) {
 
 			growTree();
-
 			propagate();
-
 			updateTimeMap(m);
-
 			selectLocation(m);
 
 

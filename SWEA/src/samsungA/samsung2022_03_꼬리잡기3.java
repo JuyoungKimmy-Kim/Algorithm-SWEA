@@ -110,58 +110,6 @@ public class samsung2022_03_꼬리잡기3 {
 		getScore(n-1, y, x);
 	}
 
-	
-    
-  /*
-    public static void throwBall(int turn) {
-        int t =turn % (4*N+1);
-    
-        if(t <= N) {
-        	t-=1;
-            for(int i = 0; i < N; i++) {
-                if(1 <= map[t][i] && map[t][i] <= 3) {
-                	getScore(pmap[t][i], t, i);
-                    return;
-                }
-            }
-        }
-        else if(t <= 2 * N) {
-            // n+1 ~ 2n 라운드의 경우 아래에서 윗쪽 방향으로 공을 던집니다.
-            t -= N;
-            t-=1;
-            for(int i = 0; i < N; i++) {
-                if(1 <= map[N -1 -i][t] && map[N - 1 - i][t] <= 3) {
-                	getScore(pmap[N-1-i][t], N-1-i, t);
-                    return;
-                }
-            }
-        }
-        else if(t <= 3 * N) {
-            // 2n+1 ~ 3n 라운드의 경우 오른쪽에서 왼쪽 방향으로 공을 던집니다.
-            t -= (2 * N);
-            t-=1;
-            for(int i = 0; i < N; i++) {
-                if(1 <= map[N - 1 - t][N - 1 - i] && map[N - 1 - t][N - 1 - i] <= 3) {
-                	getScore(pmap[N - 1 - t][N - 1 - i], N - 1 - t, N - 1 - i);
-                    return;
-                }
-            }
-        }
-        else {
-            // 3n+1 ~ 4n 라운드의 경우 위에서 아랫쪽 방향으로 공을 던집니다.
-            t -= (3 * N);
-            t-=1;
-            for(int i = 0; i < N; i++) {
-                if(1 <= map[i][N - 1 - t] && map[i][N - 1 - t] <= 3) {
-                	getScore(pmap[i][N - 1 - t], i, N - 1 - t);
-                    return;
-                }
-            }
-        }
-    }
-	
-	*/
-	
 	// idx번 째 팀의 y,x에 있는 사람을 맞춤
 	static void getScore(int n, int y, int x) {
 		
