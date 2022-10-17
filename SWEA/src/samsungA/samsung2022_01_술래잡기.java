@@ -70,15 +70,7 @@ public class samsung2022_01_술래잡기 {
 		
 		//#1. order - inout, outin
 		makeOrder ();
-		
-//		for (int i=1; i<inOut.size()-1; i++)
-//			System.out.println(inOut.get(i).y+" "+inOut.get(i).x);
-//		
-//		for (int i=0; i<outIn.size(); i++)
-//			System.out.println(outIn.get(i).y+" "+outIn.get(i).x);
-//		
-		
-		//#2 k번만큼 반복 -> inOut, outIn이 시간에 따라 움직이게
+
 		
 		int Time=1;
 		sy=sx=N/2+1;
